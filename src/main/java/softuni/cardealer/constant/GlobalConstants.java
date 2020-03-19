@@ -9,4 +9,5 @@ public class GlobalConstants {
     public static final String OUTPUT_2 = "src/main/resources/files/toyota-cars.xml";
     public static final String OUTPUT_3 = "src/main/resources/files/local-suppliers.xml";
     public static final String OUTPUT_4 = "src/main/resources/files/cars-and-parts.xml";
+    public static final String JSON_OUTPUT_1 = "src/main/resources/files/json-exports/json-export1.json";
 }

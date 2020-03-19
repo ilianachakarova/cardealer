@@ -30,17 +30,20 @@ public class AppController implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        this.seedSuppliers();
-//        this.seedParts();
-//        this.seedCars();
- //       this.seedCustomers();
-   //     this.seedSales();
+        this.seedSuppliers();
+        this.seedParts();
+        this.seedCars();
+        this.seedCustomers();
+        this.seedSales();
 
-     //   this.writeCustomers();
-      //  this.writeCarsMakeToyota();
-      //  this.writeLocalSuppliers();
+        this.writeCustomers();
+        this.writeCarsMakeToyota();
+        this.writeLocalSuppliers();
         this.writeCarsWithParts();
+
+
     }
+
 
     private void writeCarsWithParts() throws JAXBException {
         CarViewRootDto carViewRootDto = this.carService.getAllCarsAndParts();
@@ -49,17 +52,17 @@ public class AppController implements CommandLineRunner {
 
     private void writeLocalSuppliers() throws JAXBException {
         SupplierViewRootDto supplierViewRootDto = this.supplierService.getLocalSuppliers();
-        this.xmlParser.marshalToFile(GlobalConstants.OUTPUT_3,supplierViewRootDto);
+        this.xmlParser.marshalToFile(GlobalConstants.OUTPUT_3, supplierViewRootDto);
     }
 
     private void writeCarsMakeToyota() throws JAXBException {
         CarViewRootDto carViewRootDto = this.carService.writeCarsByMakeToyota();
-        this.xmlParser.marshalToFile(GlobalConstants.OUTPUT_2,carViewRootDto);
+        this.xmlParser.marshalToFile(GlobalConstants.OUTPUT_2, carViewRootDto);
     }
 
     private void writeCustomers() throws JAXBException {
         CustomerViewRootDto customerViewRootDto = this.customerService.getAllOrderedCustomers();
-        this.xmlParser.marshalToFile(GlobalConstants.OUTPUT_1,customerViewRootDto);
+        this.xmlParser.marshalToFile(GlobalConstants.OUTPUT_1, customerViewRootDto);
     }
 
     private void seedSales() {
@@ -68,7 +71,7 @@ public class AppController implements CommandLineRunner {
 
     private void seedCustomers() throws JAXBException, FileNotFoundException {
         CustomerSeedRootDto customerSeedRootDto =
-                this.xmlParser.unmarshalFromFile(GlobalConstants.CUSTOMERS_XML_IMPORT,CustomerSeedRootDto.class);
+                this.xmlParser.unmarshalFromFile(GlobalConstants.CUSTOMERS_XML_IMPORT, CustomerSeedRootDto.class);
         this.customerService.seedCustomers(customerSeedRootDto.getCustomers());
 
 
@@ -76,19 +79,19 @@ public class AppController implements CommandLineRunner {
 
     private void seedCars() throws JAXBException, FileNotFoundException {
         CarSeedRootDto carSeedRootDto =
-                this.xmlParser.unmarshalFromFile(GlobalConstants.CARS_XML_IMPORT,CarSeedRootDto.class);
+                this.xmlParser.unmarshalFromFile(GlobalConstants.CARS_XML_IMPORT, CarSeedRootDto.class);
         this.carService.seedCars(carSeedRootDto.getCars());
     }
 
     private void seedParts() throws JAXBException, FileNotFoundException {
         PartSeedRootDto partSeedRootDto =
-                this.xmlParser.unmarshalFromFile(GlobalConstants.PARTS_XML_IMPORT,PartSeedRootDto.class);
+                this.xmlParser.unmarshalFromFile(GlobalConstants.PARTS_XML_IMPORT, PartSeedRootDto.class);
         this.partService.seedParts(partSeedRootDto.getParts());
     }
 
     private void seedSuppliers() throws JAXBException, FileNotFoundException {
-       SupplierSeedRootDto supplierSeedRootDto =
-               this.xmlParser.unmarshalFromFile(GlobalConstants.SUPPLIERS_XML_IMPORT, SupplierSeedRootDto.class);
+        SupplierSeedRootDto supplierSeedRootDto =
+                this.xmlParser.unmarshalFromFile(GlobalConstants.SUPPLIERS_XML_IMPORT, SupplierSeedRootDto.class);
         this.supplierService.seedSuppliers(supplierSeedRootDto.getSuppliers());
     }
 }

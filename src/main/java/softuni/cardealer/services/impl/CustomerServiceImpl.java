@@ -36,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void seedCustomers(List<CustomerSeedDto> customerSeedDtos) {
         customerSeedDtos.forEach(customerSeedDto -> {
             if(this.validationUtil.isValid(customerSeedDto)){
-                if(this.isExistCustomer(customerSeedDto.isYoungDriver(),customerSeedDto.getBirthDate())){
+                if(this.isExistCustomer(customerSeedDto.getName(),customerSeedDto.getBirthDate())){
                     System.out.println("Customer already in DB");
                 }else {
 
@@ -59,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerViewRootDto getAllOrderedCustomers() {
-        List<Customer>customers = this.customerRepository.findAll();
+        List<Customer>customers = this.customerRepository.getAllOrderedByDateOfBirthNotYoungDriver();
         List<CustomerViewDto>customerViewDtos = new ArrayList<>();
         customers.forEach(customer -> {
             CustomerViewDto customerViewDto = this.modelMapper.map(customer,CustomerViewDto.class);
@@ -71,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 
-    private boolean isExistCustomer(boolean name, LocalDateTime birthDate) {
-        return this.customerRepository.findAllByDateOfBirthAndYoungDriver(birthDate,name) != null;
+    private boolean isExistCustomer(String name, LocalDateTime birthDate) {
+        return this.customerRepository.findByNameAndAndDateOfBirth(name,birthDate) != null;
     }
 }
